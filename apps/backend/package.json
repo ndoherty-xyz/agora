@@ -14,18 +14,27 @@
   "license": "ISC",
   "dependencies": {
     "@hocuspocus/extension-database": "^3.4.1",
+    "@hocuspocus/extension-throttle": "^3.4.1",
     "@hocuspocus/server": "^3.4.1",
     "@tiptap/extension-underline": "^3.13.0",
+    "cheerio": "^1.1.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.0",
     "express": "^5.2.1",
     "express-ws": "^5.0.2",
+    "openai": "^6.10.0",
     "postgres": "^3.4.7",
     "yjs": "^13.6.27"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/express-ws": "^3.0.6",
     "@types/node": "^20.19.26",
+    "@types/ws": "^8.18.1",
     "drizzle-kit": "^0.31.8",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"

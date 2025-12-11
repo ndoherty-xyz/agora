@@ -3,9 +3,13 @@
 import { Editor } from "@tiptap/react";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
+import { ImageModal } from "./image-modal";
+import { LinkPreviewModal } from "./link-preview-modal";
 
 export const Toolbar = ({ editor }: { editor: Editor | null }) => {
   const [, forceUpdate] = useState(0);
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [showLinkModal, setShowLinkModal] = useState(false);
 
   useEffect(() => {
     if (!editor) return;
@@ -24,7 +28,7 @@ export const Toolbar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) return null;
 
   return (
-    <div className="bg-white flex flex-row gap-[8px] items-center align-center p-[16px] rounded-[16px] border border-gray-500 shadow-sm">
+    <div className="bg-neutral-50 flex flex-row gap-[8px] items-center align-center p-[16px] rounded-[16px] border border-black/5 shadow-sm">
       <Button
         variant={editor.isActive("bold") ? "default" : "ghost"}
         onClick={() => {
@@ -49,6 +53,17 @@ export const Toolbar = ({ editor }: { editor: Editor | null }) => {
       >
         Underline
       </Button>
+      <Button onClick={() => setShowImageModal(true)}>Image</Button>
+      {showImageModal && editor && (
+        <ImageModal editor={editor} onClose={() => setShowImageModal(false)} />
+      )}
+      <Button onClick={() => setShowLinkModal(true)}>Link</Button>
+      {showLinkModal && editor && (
+        <LinkPreviewModal
+          editor={editor}
+          onClose={() => setShowLinkModal(false)}
+        />
+      )}
     </div>
   );
 };
