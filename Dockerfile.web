@@ -18,7 +18,7 @@ COPY . .
 RUN pnpm install --production=false
 
 # Add sharp from alpine image for nextjs image optimization
-RUN pnpm add sharp --production=false
+RUN pnpm add sharp --production=false -w
 
 # Build the web app
 RUN pnpm build
