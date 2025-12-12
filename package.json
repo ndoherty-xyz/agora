@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:web": "pnpm --filter @agora/frontend build",
+    "start:web": "pnpm --filter @agora/frontend start",
+    "build:api": "pnpm --filter @agora/backend build",
+    "start:api": "pnpm --filter @agora/backend start",
+    "db:migrate": "pnpm - -filter @agora/backend db:migrate"
   },
   "keywords": [],
   "author": "",

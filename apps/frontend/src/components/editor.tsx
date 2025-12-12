@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/refs */
 "use client";
 
+import "../css/editor.css";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Collaboration from "@tiptap/extension-collaboration";
@@ -88,8 +89,14 @@ export const Editor = () => {
   });
 
   return (
-    <div className="h-[200vh] m-auto px-[256px]">
-      <EditorContent height={"100%"} className="h-full" editor={editor} />;
+    <div>
+      <EditorContent
+        autoFocus
+        placeholder="Looks like nothing is here, write to start..."
+        height={"100%"}
+        className="h-full"
+        editor={editor}
+      />
       {editor && <LinkBubbleMenu editor={editor} />}
       <div className="fixed w-screen flex items-center justify-center bottom-0 left-0 p-[24px]">
         <Toolbar editor={editor} />

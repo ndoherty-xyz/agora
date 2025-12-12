@@ -1,0 +1,94 @@
+/* Editor container */
+.ProseMirror {
+  /* base styles for the whole editor */
+}
+
+.ProseMirror-focused {
+  /* when editor is focused */
+  outline: 0px;
+}
+
+/* Block elements */
+.ProseMirror p {
+  font-family: "Garamond", "Times New Roman", Times, serif;
+  font-weight: 500;
+  font-stretch: semi-condensed;
+  font-size: 16px;
+}
+
+.ProseMirror h1 {
+}
+
+.ProseMirror h2 {
+}
+
+.ProseMirror h3 {
+}
+
+.ProseMirror h4 {
+}
+
+.ProseMirror h5 {
+}
+
+.ProseMirror h6 {
+}
+
+.ProseMirror blockquote {
+}
+
+.ProseMirror pre {
+}
+
+.ProseMirror code {
+  /* inline code */
+}
+
+.ProseMirror pre code {
+  /* code blocks */
+}
+
+.ProseMirror hr {
+}
+
+/* Lists */
+.ProseMirror ul {
+}
+
+.ProseMirror ol {
+}
+
+.ProseMirror li {
+}
+
+.ProseMirror li p {
+  /* paragraphs inside list items */
+}
+
+/* Inline formatting */
+.ProseMirror strong {
+}
+
+.ProseMirror em {
+}
+
+.ProseMirror u {
+}
+
+.ProseMirror s {
+}
+
+/* Links and images */
+.ProseMirror a {
+}
+
+.ProseMirror img {
+}
+
+/* Placeholder text (when editor is empty) */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

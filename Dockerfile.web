@@ -1,0 +1,32 @@
+# Fetching the minified node image on apline linux
+FROM node:22-alpine
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+# Declaring env
+ENV NODE_ENV=production
+
+# Setting up the work directory
+WORKDIR /app
+
+# Copy the package.json, and yarn.lock files
+COPY . .
+
+# Installing dependencies
+RUN pnpm install --production=false
+
+# Add sharp from alpine image for nextjs image optimization
+RUN pnpm add sharp --production=false
+
+# Build the web app
+RUN pnpm build
+
+# Set port provided by railway
+ARG PORT
+
+# Expose the port 
+EXPOSE $PORT
+
+CMD ["sh", "-c", "sleep 3 && pnpm start"]
