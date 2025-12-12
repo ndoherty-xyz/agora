@@ -1,4 +1,4 @@
-import { provider } from "@/lib/ydoc";
+import { provider, SERVER_DOMAIN } from "@/lib/ydoc";
 import { useEffect, useState } from "react";
 import { useAuth } from "./auth-context";
 
@@ -73,7 +73,7 @@ export const Users = () => {
         </button>
       ) : (
         <a
-          href="http://localhost:3001/api/auth/x"
+          href={`http://${SERVER_DOMAIN}/api/auth/x`}
           className="text-xs text-gray-500 hover:text-gray-700"
         >
           link twitter

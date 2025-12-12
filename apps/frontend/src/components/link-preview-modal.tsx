@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Editor } from "@tiptap/react";
+import { SERVER_DOMAIN } from "@/lib/ydoc";
 
 export const LinkPreviewModal = ({
   editor,
@@ -25,7 +26,9 @@ export const LinkPreviewModal = ({
 
     try {
       const res = await fetch(
-        `http://localhost:3001/api/link-preview?url=${encodeURIComponent(url)}`
+        `http://${SERVER_DOMAIN}/api/link-preview?url=${encodeURIComponent(
+          url
+        )}`
       );
 
       if (!res.ok) throw new Error("Failed to fetch preview");

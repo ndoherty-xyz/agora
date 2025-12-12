@@ -1,5 +1,6 @@
 "use client";
 
+import { SERVER_DOMAIN } from "@/lib/ydoc";
 import { Editor } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import { useState } from "react";
@@ -50,7 +51,9 @@ export const LinkBubbleMenu = ({ editor }: { editor: Editor }) => {
 
     try {
       const res = await fetch(
-        `http://localhost:3001/api/link-preview?url=${encodeURIComponent(url)}`
+        `http://${SERVER_DOMAIN}/api/link-preview?url=${encodeURIComponent(
+          url
+        )}`
       );
 
       if (!res.ok) throw new Error("Failed to fetch");
