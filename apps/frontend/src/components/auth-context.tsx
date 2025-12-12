@@ -1,7 +1,7 @@
 "use client";
 
 import { generateIdentity } from "@/lib/identity";
-import { provider, SERVER_DOMAIN } from "@/lib/ydoc";
+import { provider, SERVER_URL } from "@/lib/ydoc";
 import {
   createContext,
   useContext,
@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://${SERVER_DOMAIN}/api/auth/me`, {
+    fetch(`http://${SERVER_URL}/api/auth/me`, {
       credentials: "include",
     })
       .then((res) => (res.ok ? res.json() : null))
@@ -52,7 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [xUser]);
 
   const logout = async () => {
-    await fetch(`http://${SERVER_DOMAIN}/api/auth/logout`, {
+    await fetch(`http://${SERVER_URL}/api/auth/logout`, {
       method: "POST",
       credentials: "include",
     });
