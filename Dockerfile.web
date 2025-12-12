@@ -21,7 +21,7 @@ RUN pnpm install --production=false
 RUN pnpm add sharp --production=false -w
 
 # Build the web app
-RUN pnpm build
+RUN pnpm build:web
 
 # Set port provided by railway
 ARG PORT
@@ -29,4 +29,4 @@ ARG PORT
 # Expose the port 
 EXPOSE $PORT
 
-CMD ["sh", "-c", "sleep 3 && pnpm start"]
+CMD ["sh", "-c", "sleep 3 && pnpm start:web"]
