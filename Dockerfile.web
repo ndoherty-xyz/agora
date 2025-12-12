@@ -8,6 +8,10 @@ RUN corepack enable
 # Declaring env
 ENV NODE_ENV=production
 
+# Next.js on railway doesn't include .env at build time, need to copy some env vars
+ARG NEXT_PUBLIC_SERVER_DOMAIN
+ENV NEXT_PUBLIC_SERVER_DOMAIN $NEXT_PUBLIC_SERVER_DOMAIN
+
 # Setting up the work directory
 WORKDIR /app
 
