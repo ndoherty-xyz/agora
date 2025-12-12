@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://${SERVER_URL}/api/auth/me`, {
+    fetch(`${SERVER_URL}/api/auth/me`, {
       credentials: "include",
     })
       .then((res) => (res.ok ? res.json() : null))
@@ -52,7 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [xUser]);
 
   const logout = async () => {
-    await fetch(`http://${SERVER_URL}/api/auth/logout`, {
+    await fetch(`${SERVER_URL}/api/auth/logout`, {
       method: "POST",
       credentials: "include",
     });

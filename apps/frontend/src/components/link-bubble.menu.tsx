@@ -51,7 +51,7 @@ export const LinkBubbleMenu = ({ editor }: { editor: Editor }) => {
 
     try {
       const res = await fetch(
-        `http://${SERVER_URL}/api/link-preview?url=${encodeURIComponent(url)}`
+        `${SERVER_URL}/api/link-preview?url=${encodeURIComponent(url)}`
       );
 
       if (!res.ok) throw new Error("Failed to fetch");

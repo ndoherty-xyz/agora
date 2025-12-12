@@ -73,7 +73,7 @@ export const Users = () => {
         </button>
       ) : (
         <a
-          href={`http://${SERVER_URL}/api/auth/x`}
+          href={`${SERVER_URL}/api/auth/x`}
           className="text-xs text-gray-500 hover:text-gray-700"
         >
           link twitter
