@@ -1,10 +1,10 @@
 "use client";
 
 import { Editor } from "@tiptap/react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
-import { ImageModal } from "./image-modal";
-import { LinkPreviewModal } from "./link-preview-modal";
+import { ImageModal } from "./images/image-modal";
+import { LinkPreviewModal } from "./link-preview/link-preview-modal";
 import {
   BoldIcon,
   ImageIcon,

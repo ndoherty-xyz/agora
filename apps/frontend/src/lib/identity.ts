@@ -86,3 +86,14 @@ export function generateIdentity() {
   const color = COLORS[Math.floor(Math.random() * COLORS.length)];
   return { name: `${adj} ${name}`, color };
 }
+
+export function hashStringToColor(handle: string): string {
+  // djb2 hash
+  let hash = 5381;
+  for (let i = 0; i < handle.length; i++) {
+    hash = (hash << 5) + hash + handle.charCodeAt(i);
+  }
+
+  const index = Math.abs(hash) % COLORS.length;
+  return COLORS[index];
+}

@@ -1,8 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Button } from "./ui/button";
-import { LinkIcon } from "lucide-react";
 
 type AuthorInfo = {
   name: string;

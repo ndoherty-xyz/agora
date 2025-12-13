@@ -1,6 +1,6 @@
 "use client";
 
-import { generateIdentity } from "@/lib/identity";
+import { generateIdentity, hashStringToColor } from "@/lib/identity";
 import { provider, SERVER_URL } from "@/lib/ydoc";
 import {
   createContext,
@@ -45,7 +45,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (xUser) {
       provider.awareness?.setLocalStateField("user", {
         name: `@${xUser.handle}`,
-        color: localUser.color,
+        color: xUser ? hashStringToColor(xUser.handle) : localUser.color,
         avatar: xUser.avatar,
       });
     }
@@ -61,7 +61,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ xUser, user: localUser, logout, loading }}>
+    <AuthContext.Provider
+      value={{
+        xUser,
+        user: {
+          ...localUser,
+          color: xUser ? hashStringToColor(xUser.handle) : localUser.color,
+        },
+        logout,
+        loading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

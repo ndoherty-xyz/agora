@@ -1,21 +1,21 @@
 /* eslint-disable react-hooks/refs */
 "use client";
 
-import "../css/editor.css";
+import "../../css/editor.css";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCaret from "@tiptap/extension-collaboration-caret";
 import { Toolbar } from "./toolbar";
 import { provider, ydoc } from "@/lib/ydoc";
-import { Users } from "./users";
-import { useAuth } from "./auth-context";
+import { Users } from "../users";
+import { useAuth } from "../auth-context";
 import { AuthorMark } from "@/lib/author-mark";
 import { useEffect, useRef } from "react";
-import { LinkPreview } from "./editor/link-preview";
-import { LinkBubbleMenu } from "./link-bubble.menu";
-import { ImageBlock } from "./editor/image-block";
-import { ImageBubbleMenu } from "./editor/image-bubble-menu";
+import { LinkPreview } from "./link-preview/link-preview";
+import { LinkBubbleMenu } from "./link-preview/link-bubble.menu";
+import { ImageBlock } from "./images/image-block";
+import { ImageBubbleMenu } from "./images/image-bubble-menu";
 import BubbleMenu from "@tiptap/extension-bubble-menu";
 
 export const Editor = () => {

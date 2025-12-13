@@ -3,8 +3,9 @@
 import { Editor } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
+
 import { MaximizeIcon, MinimizeIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const ImageBubbleMenu = ({ editor }: { editor: Editor }) => {
   const [currentSize, setCurrentSize] = useState("large");

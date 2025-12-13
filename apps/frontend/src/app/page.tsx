@@ -1,6 +1,6 @@
 import { AuthProvider } from "@/components/auth-context";
-import { AuthorTooltip } from "@/components/author-tooltip";
-import { Editor } from "@/components/editor";
+import { AuthorTooltip } from "@/components/editor/author-tooltip";
+import { Editor } from "@/components/editor/editor";
 
 export default function Home() {
   return (
