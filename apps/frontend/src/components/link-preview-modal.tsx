@@ -3,12 +3,23 @@
 import { useState } from "react";
 import { Editor } from "@tiptap/react";
 import { SERVER_URL } from "@/lib/ydoc";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export const LinkPreviewModal = ({
+  open,
   editor,
   initialUrl = "",
   onClose,
 }: {
+  open: boolean;
   editor: Editor;
   initialUrl?: string;
   onClose: () => void;
@@ -51,38 +62,35 @@ export const LinkPreviewModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-4 w-96">
-        <h3 className="font-medium mb-3">Add Link Preview</h3>
+    <Dialog open={open} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Add link preview</DialogTitle>
+        </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <input
+          <Input
             type="url"
             placeholder="https://example.com"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="w-full border rounded px-3 py-2 mb-2"
             autoFocus
           />
-          {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
-          <div className="flex justify-end gap-2">
-            <button
+          {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
+          <DialogFooter className="mt-4">
+            <Button
               type="button"
+              variant="ghost"
               onClick={onClose}
-              className="px-3 py-1 text-gray-600"
               disabled={loading}
             >
-              cancel
-            </button>
-            <button
-              type="submit"
-              className="px-3 py-1 bg-blue-500 text-white rounded disabled:opacity-50"
-              disabled={loading}
-            >
-              {loading ? "loading..." : "add"}
-            </button>
-          </div>
+              Cancel
+            </Button>
+            <Button type="submit" disabled={loading}>
+              {loading ? "Loading..." : "Add"}
+            </Button>
+          </DialogFooter>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };

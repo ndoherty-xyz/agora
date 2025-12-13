@@ -24,8 +24,6 @@ import {
 } from "./utils/moderation";
 import { extractImageNodes, extractText } from "./utils/doc";
 
-let isModerating = false;
-
 const hocuspocus = new Hocuspocus({
   extensions: [
     new Throttle({
@@ -53,52 +51,13 @@ const hocuspocus = new Hocuspocus({
       },
     }),
   ],
-  async onChange({ document, transactionOrigin }) {
+  async onChange({ transactionOrigin }) {
     if (transactionOrigin === "moderation") {
       console.log("skipping - moderation origin");
       return;
     }
 
-    if (isModerating) return;
-    isModerating = true;
-
-    try {
-      const fragment = document.getXmlFragment("default");
-      const fullDocumentText = extractText(fragment);
-      const allImageNodes = extractImageNodes(fragment);
-
-      const [documentFlagged, imagesFlagged] = await Promise.all([
-        checkTextForFlaggedContent(fullDocumentText),
-        getFlaggedImages(allImageNodes),
-      ]);
-
-      let flaggedNodes: FlaggedElementMapping = imagesFlagged;
-
-      if (documentFlagged.flagged) {
-        const flaggedElements = await findFlaggedNodes(fragment);
-
-        if (flaggedElements.size === 0) {
-          console.error(
-            "[MODERATION] Full doc flagged but no specific nodes found. Doc length:",
-            extractText(fragment).length
-          );
-        }
-
-        flaggedNodes = mergeDeletionMaps(flaggedNodes, flaggedElements);
-      }
-
-      if (flaggedNodes.size > 0) {
-        document.transact(() => {
-          flaggedNodes.forEach((indices, parent) => {
-            indices.forEach((index) => {
-              parent.delete(index, 1);
-            });
-          });
-        }, "moderation");
-      }
-    } finally {
-      isModerating = false;
-    }
+    hasChangedSinceLastModeration = true;
   },
   async onConnect({ request, documentName }) {
     const ip =
@@ -113,6 +72,59 @@ const hocuspocus = new Hocuspocus({
     console.log(`client disconnected from ${documentName}`);
   },
 });
+
+// Document moderation interval
+let hasChangedSinceLastModeration = true;
+let isModerating = false;
+setInterval(async () => {
+  if (!hasChangedSinceLastModeration) return;
+  if (isModerating) return;
+
+  const doc = hocuspocus.documents.get("main");
+  if (!doc) return;
+
+  try {
+    isModerating = true;
+    const fragment = doc.getXmlFragment("default");
+    const fullDocumentText = extractText(fragment);
+    const allImageNodes = extractImageNodes(fragment);
+
+    const [documentFlagged, imagesFlagged] = await Promise.all([
+      checkTextForFlaggedContent(fullDocumentText),
+      getFlaggedImages(allImageNodes),
+    ]);
+
+    let flaggedNodes: FlaggedElementMapping = imagesFlagged;
+
+    if (documentFlagged.flagged) {
+      const flaggedElements = await findFlaggedNodes(fragment);
+
+      if (flaggedElements.size === 0) {
+        console.error(
+          "[MODERATION] Full doc flagged but no specific nodes found. Doc length:",
+          extractText(fragment).length
+        );
+      }
+
+      flaggedNodes = mergeDeletionMaps(flaggedNodes, flaggedElements);
+    }
+
+    if (flaggedNodes.size > 0) {
+      doc.transact(() => {
+        flaggedNodes.forEach((indices, parent) => {
+          indices.forEach((index) => {
+            parent.delete(index, 1);
+          });
+        });
+      }, "moderation");
+    }
+  } catch (e: unknown) {
+    console.error(e);
+  } finally {
+    hasChangedSinceLastModeration = false;
+    isModerating = false;
+  }
+}, 10000);
 
 const { app } = expressWebsockets(express());
 

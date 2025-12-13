@@ -6,15 +6,17 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCaret from "@tiptap/extension-collaboration-caret";
-import Image from "@tiptap/extension-image";
 import { Toolbar } from "./toolbar";
 import { provider, ydoc } from "@/lib/ydoc";
 import { Users } from "./users";
 import { useAuth } from "./auth-context";
 import { AuthorMark } from "@/lib/author-mark";
 import { useEffect, useRef } from "react";
-import { LinkPreview } from "./link-preview";
+import { LinkPreview } from "./editor/link-preview";
 import { LinkBubbleMenu } from "./link-bubble.menu";
+import { ImageBlock } from "./editor/image-block";
+import { ImageBubbleMenu } from "./editor/image-bubble-menu";
+import BubbleMenu from "@tiptap/extension-bubble-menu";
 
 export const Editor = () => {
   const { user, xUser } = useAuth();
@@ -78,11 +80,14 @@ export const Editor = () => {
           };
         },
       }),
-      Image.configure({
-        inline: false,
-        allowBase64: false,
-      }),
+      ImageBlock,
       LinkPreview,
+      BubbleMenu.configure({
+        pluginKey: "imgBubbleMenu",
+      }),
+      BubbleMenu.configure({
+        pluginKey: "imgBubbleMenu",
+      }),
     ],
     content: "<p>Hello World! 🌎️</p>",
     immediatelyRender: false,
@@ -97,6 +102,7 @@ export const Editor = () => {
         className="h-full"
         editor={editor}
       />
+      {editor && <ImageBubbleMenu editor={editor} />}
       {editor && <LinkBubbleMenu editor={editor} />}
       <div className="fixed w-screen flex items-center justify-center bottom-0 left-0 p-[24px]">
         <Toolbar editor={editor} />

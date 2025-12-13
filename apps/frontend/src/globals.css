@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-parchment: var(--parchment);
+  --color-soft-linen: var(--soft-linen);
+  --color-dry-sage: var(--dry-sage);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-hedvig: var(--font-hedvig-serif);
+}
+
+:root {
+  --background: #fff;
+  --foreground: black;
+
+  --parchment: #f8f7f2;
+  --soft-linen: #f1eee4;
+  --dry-sage: #cdc6a2;
+  --text-primary: #282415;
+  --text-secondary: #50482a;
+  --text-tertiary: #867846;
+}
+
+@layer base {
+  * {
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

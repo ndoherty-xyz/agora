@@ -2,11 +2,16 @@
 
 import { useState } from "react";
 import { Editor } from "@tiptap/react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export const ImageModal = ({
+  open,
   editor,
   onClose,
 }: {
+  open: boolean;
   editor: Editor;
   onClose: () => void;
 }) => {
@@ -15,41 +20,34 @@ export const ImageModal = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (url.trim()) {
-      editor.chain().focus().setImage({ src: url }).run();
+      editor.chain().focus().setImageBlock({ src: url }).run();
       onClose();
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-4 w-96">
-        <h3 className="font-medium mb-3">Add Image</h3>
-        <form onSubmit={handleSubmit}>
-          <input
+    <Dialog open={open} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent showCloseButton={false}>
+        <DialogTitle>Add image via URL</DialogTitle>
+
+        <div className="py-[16px] px-[20px] flex flex-col gap-[16px]">
+          <Input
             type="url"
             placeholder="https://example.com/image.png"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="w-full border rounded px-3 py-2 mb-3"
             autoFocus
           />
-          <div className="flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-3 py-1 text-gray-600"
-            >
-              cancel
-            </button>
-            <button
-              type="submit"
-              className="px-3 py-1 bg-blue-500 text-white rounded"
-            >
-              add
-            </button>
+          <div className="flex flex-row w-full gap-[8px] items-center justify-end">
+            <Button type="button" variant="ghost" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button variant="default" onClick={handleSubmit}>
+              Add
+            </Button>
           </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };

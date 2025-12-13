@@ -11,6 +11,6 @@ export const ydoc = new Y.Doc();
 
 export const provider = new HocuspocusProvider({
   url: `${WEBSOCKET_URL}/collaborate`,
-  name: "example-document",
+  name: "main",
   document: ydoc,
 });

@@ -76,8 +76,12 @@ export const LinkBubbleMenu = ({ editor }: { editor: Editor }) => {
 
   return (
     <BubbleMenu
+      pluginKey="linkBubbleMenu"
       editor={editor}
-      shouldShow={({ editor }) => editor.isActive("link")}
+      shouldShow={({ editor }) => {
+        console.log("link bubble shouldShow");
+        return editor.isActive("link");
+      }}
     >
       <div className="bg-white border rounded shadow-lg flex overflow-hidden">
         <button

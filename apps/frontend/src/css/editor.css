@@ -1,6 +1,7 @@
 /* Editor container */
 .ProseMirror {
   /* base styles for the whole editor */
+  color: var(--text-text-primary);
 }
 
 .ProseMirror-focused {
@@ -10,10 +11,9 @@
 
 /* Block elements */
 .ProseMirror p {
-  font-family: "Garamond", "Times New Roman", Times, serif;
-  font-weight: 500;
-  font-stretch: semi-condensed;
-  font-size: 16px;
+  font-family: var(--font-hedvig-serif), "Garamond", "Times New Roman", Times,
+    serif;
+  font-size: 20px;
 }
 
 .ProseMirror h1 {

@@ -5,6 +5,13 @@ import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { ImageModal } from "./image-modal";
 import { LinkPreviewModal } from "./link-preview-modal";
+import {
+  BoldIcon,
+  ImageIcon,
+  ItalicIcon,
+  Link2Icon,
+  UnderlineIcon,
+} from "lucide-react";
 
 export const Toolbar = ({ editor }: { editor: Editor | null }) => {
   const [, forceUpdate] = useState(0);
@@ -28,42 +35,67 @@ export const Toolbar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) return null;
 
   return (
-    <div className="bg-neutral-50 flex flex-row gap-[8px] items-center align-center p-[16px] rounded-[16px] border border-black/5 shadow-sm">
-      <Button
-        variant={editor.isActive("bold") ? "default" : "ghost"}
-        onClick={() => {
-          editor.chain().focus().toggleBold().run();
-        }}
-      >
-        BOLD
-      </Button>
-      <Button
-        variant={editor.isActive("italic") ? "default" : "ghost"}
-        onClick={() => {
-          editor.chain().focus().toggleItalic().run();
-        }}
-      >
-        Italic
-      </Button>
-      <Button
-        variant={editor.isActive("underline") ? "default" : "ghost"}
-        onClick={() => {
-          editor.chain().focus().toggleUnderline().run();
-        }}
-      >
-        Underline
-      </Button>
-      <Button onClick={() => setShowImageModal(true)}>Image</Button>
-      {showImageModal && editor && (
-        <ImageModal editor={editor} onClose={() => setShowImageModal(false)} />
-      )}
-      <Button onClick={() => setShowLinkModal(true)}>Link</Button>
-      {showLinkModal && editor && (
-        <LinkPreviewModal
-          editor={editor}
-          onClose={() => setShowLinkModal(false)}
-        />
-      )}
+    <div className="bg-parchment/95 backdrop-blur-[1px] flex flex-row gap-[16px] items-center align-center p-[16px] rounded-full border border-black/10">
+      <div className="flex items-center gap-[4px]">
+        <Button
+          size="icon"
+          variant={editor.isActive("bold") ? "default" : "ghost"}
+          onClick={() => {
+            editor.chain().focus().toggleBold().run();
+          }}
+        >
+          <BoldIcon />
+        </Button>
+        <Button
+          size="icon"
+          variant={editor.isActive("italic") ? "default" : "ghost"}
+          onClick={() => {
+            editor.chain().focus().toggleItalic().run();
+          }}
+        >
+          <ItalicIcon />
+        </Button>
+        <Button
+          size="icon"
+          variant={editor.isActive("underline") ? "default" : "ghost"}
+          onClick={() => {
+            editor.chain().focus().toggleUnderline().run();
+          }}
+        >
+          <UnderlineIcon />
+        </Button>
+      </div>
+      <div className="w-[1px] h-[24px] bg-black/10" />
+      <div className="flex items-center gap-[4px]">
+        <Button
+          size="icon"
+          variant={"ghost"}
+          onClick={() => setShowImageModal(true)}
+        >
+          <ImageIcon />
+        </Button>
+        {editor && (
+          <ImageModal
+            open={showImageModal}
+            editor={editor}
+            onClose={() => setShowImageModal(false)}
+          />
+        )}
+        <Button
+          size="icon"
+          variant={"ghost"}
+          onClick={() => setShowLinkModal(true)}
+        >
+          <Link2Icon />
+        </Button>
+        {editor && (
+          <LinkPreviewModal
+            open={showLinkModal}
+            editor={editor}
+            onClose={() => setShowLinkModal(false)}
+          />
+        )}
+      </div>
     </div>
   );
 };
