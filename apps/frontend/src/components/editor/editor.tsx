@@ -8,7 +8,6 @@ import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCaret from "@tiptap/extension-collaboration-caret";
 import { Toolbar } from "./toolbar";
 import { provider, ydoc } from "@/lib/ydoc";
-import { Users } from "../users";
 import { useAuth } from "../auth-context";
 import { AuthorMark } from "@/lib/author-mark";
 import { useEffect, useRef } from "react";
@@ -106,7 +105,6 @@ export const Editor = () => {
       {editor && <LinkBubbleMenu editor={editor} />}
       <div className="fixed w-screen flex items-center justify-center bottom-0 left-0 p-[24px]">
         <Toolbar editor={editor} />
-        <Users />
       </div>
     </div>
   );

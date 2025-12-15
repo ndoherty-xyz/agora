@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+import { cn } from "@/lib/utils";
 import {
   ReactNodeViewRenderer,
   Node,
@@ -15,24 +17,35 @@ const LinkPreviewComponent = ({ node }: ReactNodeViewProps<HTMLElement>) => {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="block border rounded-lg overflow-hidden my-2 hover:bg-gray-50 no-underline text-inherit"
+        className={cn(
+          "linkPreview bg-parchment/95 hover:bg-parchment/70 transition-all duration-150 ease-out border border-black/5 flex flex-row gap-[16px] items-center rounded-[16px] overflow-hidden my-[8px] group no-underline text-inherit hover:no-underline",
+          image ? "p-[16px]" : "p-[20px]"
+        )}
         contentEditable={false}
       >
         {image && (
           <img
             src={image}
             alt={title || ""}
-            className="w-full h-40 object-cover"
+            className="w-[160px] object-cover aspect-square rounded-[8px] border border-black/5"
           />
         )}
-        <div className="p-3">
-          <div className="text-xs text-gray-500 mb-1">{siteName}</div>
-          <div className="font-medium">{title}</div>
-          {description && (
-            <div className="text-sm text-gray-600 mt-1 line-clamp-2">
-              {description}
+        <div className="flex flex-col gap-[16px]">
+          <div className="flex flex-col gap-[2px]">
+            <div className="font-semibold text-[24px] group-hover:underline font-hedvig text-text-primary">
+              {title}
             </div>
-          )}
+
+            {description && (
+              <div className="text-[16px] text-text-primary/60 mt-1 line-clamp-2 group-hover:no-underline">
+                {description}
+              </div>
+            )}
+          </div>
+
+          <div className="text-[14px] text-text-tertiary group-hover:no-underline">
+            {siteName}
+          </div>
         </div>
       </a>
     </NodeViewWrapper>

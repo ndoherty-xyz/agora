@@ -79,7 +79,12 @@
 }
 
 /* Links and images */
-.ProseMirror a {
+.ProseMirror a:not(.linkPreview) {
+  color: #64b5f6;
+}
+.ProseMirror a:hover:not(.linkPreview) {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .ProseMirror img {

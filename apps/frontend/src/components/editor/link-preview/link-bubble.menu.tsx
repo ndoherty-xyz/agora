@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { SERVER_URL } from "@/lib/ydoc";
 import { Editor } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
@@ -83,14 +84,15 @@ export const LinkBubbleMenu = ({ editor }: { editor: Editor }) => {
         return editor.isActive("link");
       }}
     >
-      <div className="bg-white border rounded shadow-lg flex overflow-hidden">
-        <button
+      <div className="bg-parchment/95 backdrop-blur-[1px] border border-black/5 rounded-full flex overflow-hidden p-[4px]">
+        <Button
+          variant="ghost"
           onClick={makePreview}
           disabled={loading}
-          className="px-3 py-1 text-sm hover:bg-gray-100 disabled:opacity-50"
+          className="disabled:opacity-50"
         >
-          {loading ? "loading..." : "make preview"}
-        </button>
+          {loading ? "Working..." : "Turn into preview"}
+        </Button>
       </div>
     </BubbleMenu>
   );

@@ -41,7 +41,10 @@ export const AuthorMark = Mark.create<AuthorMarkOptions>({
         "data-author-color": HTMLAttributes.color,
         "data-author-handle": HTMLAttributes.handle || "",
         "data-author-avatar": HTMLAttributes.avatar || "",
-        style: `border-bottom: 2px solid ${HTMLAttributes.color}`,
+        onmouseover: `
+          this.style[\"background-color\"]='${HTMLAttributes.color}33';
+          `,
+        onmouseout: "this.style[\"background-color\"]='transparent';",
       },
       0,
     ];

@@ -64,10 +64,9 @@ export const LinkPreviewModal = ({
   return (
     <Dialog open={open} onOpenChange={(open) => !open && onClose()}>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Add link preview</DialogTitle>
-        </DialogHeader>
-        <form onSubmit={handleSubmit}>
+        <DialogTitle>Add link preview</DialogTitle>
+
+        <div className="py-[16px] px-[20px] flex flex-col gap-[16px]">
           <Input
             type="url"
             placeholder="https://example.com"
@@ -75,8 +74,7 @@ export const LinkPreviewModal = ({
             onChange={(e) => setUrl(e.target.value)}
             autoFocus
           />
-          {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
-          <DialogFooter className="mt-4">
+          <div className="flex flex-row w-full gap-[8px] items-center justify-end">
             <Button
               type="button"
               variant="ghost"
@@ -85,11 +83,11 @@ export const LinkPreviewModal = ({
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={loading}>
+            <Button onClick={handleSubmit} disabled={loading}>
               {loading ? "Loading..." : "Add"}
             </Button>
-          </DialogFooter>
-        </form>
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   );
