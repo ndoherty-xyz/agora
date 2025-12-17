@@ -27,13 +27,31 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 const localUser = generateIdentity();
 
+const SESSION_KEY = "agora_session";
+
+// Helper to get auth headers
+function getAuthHeaders(): HeadersInit {
+  const session = localStorage.getItem(SESSION_KEY);
+  return session ? { Authorization: `Bearer ${session}` } : {};
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [xUser, setXUser] = useState<XUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Check for session in URL fragment (from OAuth callback)
+    const hash = window.location.hash;
+    if (hash.startsWith("#session=")) {
+      const sessionId = hash.slice("#session=".length);
+      localStorage.setItem(SESSION_KEY, sessionId);
+      // Clear the hash from URL without triggering navigation
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+
+    // Fetch user with session from localStorage
     fetch(`${SERVER_URL}/api/auth/me`, {
-      credentials: "include",
+      headers: getAuthHeaders(),
     })
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => setXUser(data))
@@ -54,8 +72,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = async () => {
     await fetch(`${SERVER_URL}/api/auth/logout`, {
       method: "POST",
-      credentials: "include",
+      headers: getAuthHeaders(),
     });
+    localStorage.removeItem(SESSION_KEY);
     setXUser(null);
     provider.awareness?.setLocalStateField("user", localUser);
   };

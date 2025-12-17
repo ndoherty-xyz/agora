@@ -243,19 +243,17 @@ app.get("/api/auth/x/callback", async (req, res) => {
     })
     .where(eq(xSession.id, session.id));
 
-  // set cookie and redirect
-  res.cookie("session", session.id, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-  });
-
-  res.redirect(process.env.FRONTEND_URL || "http://localhost:3000");
+  // redirect with session in URL fragment (for Safari compatibility - avoids third-party cookie issues)
+  const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+  res.redirect(`${frontendUrl}/#session=${session.id}`);
 });
 
 app.get("/api/auth/me", async (req, res) => {
-  const sessionId = req.cookies.session;
+  // Accept session from Authorization header (primary) or cookie (fallback)
+  const authHeader = req.headers.authorization;
+  const sessionId = authHeader?.startsWith("Bearer ")
+    ? authHeader.slice(7)
+    : req.cookies.session;
 
   if (!sessionId) {
     return res.status(401).json({ error: "Not logged in" });
@@ -279,7 +277,11 @@ app.get("/api/auth/me", async (req, res) => {
 });
 
 app.post("/api/auth/logout", async (req, res) => {
-  const sessionId = req.cookies.session;
+  // Accept session from Authorization header (primary) or cookie (fallback)
+  const authHeader = req.headers.authorization;
+  const sessionId = authHeader?.startsWith("Bearer ")
+    ? authHeader.slice(7)
+    : req.cookies.session;
 
   if (sessionId) {
     await db.delete(xSession).where(eq(xSession.id, sessionId));
