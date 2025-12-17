@@ -167,7 +167,7 @@ app.get("/api/auth/x", async (req, res) => {
   return res.redirect(authUrl.toString());
 });
 
-app.get("/auth/api/x/callback", async (req, res) => {
+app.get("/api/auth/x/callback", async (req, res) => {
   const { code, state } = req.query;
 
   if (
