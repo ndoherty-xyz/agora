@@ -33,8 +33,7 @@ export const ImageBubbleMenu = ({ editor }: { editor: Editor }) => {
       className="transition-all"
       pluginKey="imgBubbleMenu"
       editor={editor}
-      shouldShow={({ editor, state }) => {
-        console.log("image bubble should show");
+      shouldShow={({ editor }) => {
         return editor.isActive("imageBlock");
       }}
     >

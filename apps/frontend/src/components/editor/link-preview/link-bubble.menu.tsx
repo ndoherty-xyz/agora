@@ -80,7 +80,6 @@ export const LinkBubbleMenu = ({ editor }: { editor: Editor }) => {
       pluginKey="linkBubbleMenu"
       editor={editor}
       shouldShow={({ editor }) => {
-        console.log("link bubble shouldShow");
         return editor.isActive("link");
       }}
     >
